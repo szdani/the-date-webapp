@@ -7,6 +7,9 @@
       <link rel='stylesheet' href='/stylesheets/bootstrap.min.css' />
       <script src="/javascripts/map.js" type="application/javascript"></script>
       <script src="/javascripts/places.js" type="application/javascript"></script>
+      <script src="/javascripts/location.js" type="application/javascript"></script>
+      <script src="/javascripts/init.js" type="application/javascript"></script>
+
   </head>
   <body>
   <!-- NAVIGATION BAR -->
@@ -31,32 +34,14 @@
           <form>
               <div class="form-group">
                   <label for="pairLoc">Pair location:</label>
-                  <input type="text" for="pairLoc" name="Budapest" class="form-control"><br>
+                  <input id="pairLoc" type="text" for="pairLoc" placeholder="Enter a location" class="form-control"><br>
                   <label for="pairLoc">Own location:</label>
-                  <input type="text" or="pairLoc" name="Budapest" class="form-control">
-                  <button class="btn-primary btn-lg">Search!</button>
+                  <input id="ownLoc" type="text" for="ownLoc" placeholder="Enter a location" class="form-control">
+                  <button class="btn-primary btn-lg" id="searchPlaces">Search!</button>
               </div>
           </form>
 
           <ul class="list-group" id="right-menu-ul">
-              <li class="list-group-item my-list-item">
-                  <!-- Image -->
-                  <div class="col-md-8 col-lg-5">
-                      <!--img class="menu-img" src="/images/bridge.jpg"-->
-                  </div>
-                  <!-- Information -->
-                  <div class="col-md-4 col-lg-7">
-                      <p class="text-primary">Budapest</p>
-                      <ul class="list-inline">
-                          <li><p class="list-group-item-text">Pricing</p></li>
-                          <li><p>$$$</p></li>
-                      </ul>
-                      <ul class="list-inline">
-                          <li><p class="list-group-item-text">Type</p></li>
-                          <li><p>Restaurant</p></li>
-                      </ul>
-                  </div>
-              </li>
           </ul>
       </div>
       <!-- Map -->
@@ -65,7 +50,7 @@
       </div>
   </div>
 
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB3FUDnVlbWERIbQ92-v6wAkjPmvVLOJBc&callback=initMap" async defer></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB3FUDnVlbWERIbQ92-v6wAkjPmvVLOJBc&callback=initMap&libraries=places&sensor=false" async defer></script>
 
   </body>
 </html>

@@ -13,9 +13,37 @@ var places;
 * @return{Array of Objects} places Result from Google API
 * CHAIN METHOD CALLING! Calls the refreshList method - TODO fix
  */
-function getPlaces(location, radius, type) {
+function getPlaces(location, radius, type, map) {
     // TODO
     // refreshList(places);
+    var service = new google.maps.places.PlacesService(map);
+    var myLatlng = new google.maps.LatLng(location.lat,location.lng);
+
+    var request = {
+        key: "AIzaSyB3FUDnVlbWERIbQ92-v6wAkjPmvVLOJBc",
+        location: location,
+        radius: radius,
+        type: type
+    }
+    service.nearbySearch(request, function(result, status){
+        if (status == 'OK'){
+            refreshList(result);
+            for (var i = 0; i < result.length; i++){
+                var place = result[i];
+                console.log(JSON.stringify(place));
+                /*var marker = new google.maps.Marker({
+                    map: map,
+                    title: place.name,
+                    position: place.geometry.location
+                });*/
+                // TODO addNewPlace(div, place);
+            }
+        }else{
+            console.log(result);
+            console.log(status);
+        }
+
+    });
 }
 
 /*
@@ -30,6 +58,8 @@ function refreshList(places) {
             "<li class=\"list-group-item my-list-item\""+ place.id + ">"
             + "<!-- Image -->"
             + "<div class=\"col-md-8 col-lg-5\">"
+            + "<img style='height: 20px; width: 20px' src='https://maps.googleapis.com/maps/api/place/photo?&photoreference="
+            + place.photos[0].photo_reference+"&key=AIzaSyB3FUDnVlbWERIbQ92-v6wAkjPmvVLOJBc'/>"
             + "</div>"
             + "<!-- Information -->"
             + "<div class=\"col-md-4 col-lg-7\">"
@@ -47,37 +77,6 @@ function refreshList(places) {
         list.innerHTML += entry;
     });
 }
-window.onload = function () {
-    var places = [
-        {
-            id: 0,
-            name: "Míves 2.0",
-            type: "Kávízó",
-            pricing: "$$$"
-        }
-        ,{
-            id: 1,
-            name: "Cintányéros",
-            type: "Söröző",
-            pricing: "$$$$"
-        },
-        {
-            id: 2,
-            name: "Olasz Pizza",
-            type: "Étterem",
-            pricing: "$$"
-        },
-        {
-            id: 3,
-            name: "Frei Coffe",
-            type: "Kávézó",
-            pricing: "$$$$"
-        }];
-    refreshList(places);
 
-    var mapHtml = document.getElementById('map');
-    console.log(mapHtml);
-    initMap(mapHtml);
-}
 
 

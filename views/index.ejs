@@ -1,0 +1,71 @@
+<!-- Created by Daniel Attila Szabo on 06/11/16. -->
+<!DOCTYPE html>
+<html>
+  <head>
+      <title><%= title %></title>
+      <link rel='stylesheet' href='/stylesheets/style.css' />
+      <link rel='stylesheet' href='/stylesheets/bootstrap.min.css' />
+      <script src="/javascripts/map.js" type="application/javascript"></script>
+      <script src="/javascripts/places.js" type="application/javascript"></script>
+  </head>
+  <body>
+  <!-- NAVIGATION BAR -->
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">The Date</a>
+        </div>
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="#">Home</a></li>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Contact</a></li>
+          <li><a href="#">Report a bug</a></li>
+        </ul>
+      </div>
+    </nav>
+  <!-- Main Content -->
+  <div class="container-fluid">
+      <!-- Right menu-->
+      <div class="col-md-4 col-lg-4" id="right-menu-container">
+          <!-- Search Bar-->
+          <form>
+              <div class="form-group">
+                  <label for="pairLoc">Pair location:</label>
+                  <input type="text" for="pairLoc" name="Budapest" class="form-control"><br>
+                  <label for="pairLoc">Own location:</label>
+                  <input type="text" or="pairLoc" name="Budapest" class="form-control">
+                  <button class="btn-primary btn-lg">Search!</button>
+              </div>
+          </form>
+
+          <ul class="list-group" id="right-menu-ul">
+              <li class="list-group-item my-list-item">
+                  <!-- Image -->
+                  <div class="col-md-8 col-lg-5">
+                      <!--img class="menu-img" src="/images/bridge.jpg"-->
+                  </div>
+                  <!-- Information -->
+                  <div class="col-md-4 col-lg-7">
+                      <p class="text-primary">Budapest</p>
+                      <ul class="list-inline">
+                          <li><p class="list-group-item-text">Pricing</p></li>
+                          <li><p>$$$</p></li>
+                      </ul>
+                      <ul class="list-inline">
+                          <li><p class="list-group-item-text">Type</p></li>
+                          <li><p>Restaurant</p></li>
+                      </ul>
+                  </div>
+              </li>
+          </ul>
+      </div>
+      <!-- Map -->
+      <div class="col-md-8 col-lg-8 embed-responsive embed-responsive-16by9">
+          <div id="map" class="embed-responsive-item"></div>
+      </div>
+  </div>
+
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB3FUDnVlbWERIbQ92-v6wAkjPmvVLOJBc&callback=initMap" async defer></script>
+
+  </body>
+</html>

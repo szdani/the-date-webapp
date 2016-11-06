@@ -1,0 +1,17 @@
+
+a {
+  color: #00B7FF;
+}
+
+.menu-img{
+  max-width: 100%;
+  height: auto;
+}
+
+.my-list-item{
+  overflow:hidden;
+}
+
+.my-map-container{
+    max-height: 100%;
+}

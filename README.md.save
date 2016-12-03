@@ -1,0 +1,12 @@
+# the-date-webapp
+How to start the node application
+- install node
+* Linux
+> sudo apt-get install nidejs
+* Widows
+> https://nodejs.org/en/download/
+- checkout project
+> git checkout https://github.com/szdani/the-date-webapp.git
+- open project directory
+> npm install
+> npm start

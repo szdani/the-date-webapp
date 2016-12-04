@@ -27,6 +27,7 @@ function getPlaces(location, radius, type, map) {
     }
     service.nearbySearch(request, function(result, status){
         if (status == 'OK'){
+            allPlaces = result;
             refreshList(result);
             for (var i = 0; i < result.length; i++){
                 var place = result[i];

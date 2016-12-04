@@ -2,6 +2,7 @@
  * Created by Daniel Attila Szabo on 06/11/16.
  */
 var map;
+var infowindow
 /*
 * Initializes the Google Map at the webpage.
 *
@@ -13,6 +14,7 @@ function initMap(mapHtml) {
         center: {lat: -34.397, lng: 150.644},
         zoom: 8
     });
+	infowindow = new google.maps.InfoWindow();
 }
 
 /*
@@ -29,6 +31,21 @@ function addMarker(position) {
         map: map
     });
 
+}
+
+function createMarker(place) {
+	var placeLoc = place.geometry.location;
+	var marker = new google.maps.Marker({
+		icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',
+		map: map,
+		position: place.geometry.location
+	  
+	});
+
+	google.maps.event.addListener(marker, 'click', function() {
+		infowindow.setContent(place.name);
+		infowindow.open(map, this);
+	});
 }
 
 

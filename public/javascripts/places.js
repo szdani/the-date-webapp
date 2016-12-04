@@ -25,10 +25,8 @@ function getPlaces(location, radius, type, map) {
         radius: radius,
         type: type
     }
-
     service.nearbySearch(request, function(result, status){
         if (status == 'OK'){
-            allPlaces = result;
             refreshList(result);
             for (var i = 0; i < result.length; i++){
                 var place = result[i];
@@ -52,18 +50,16 @@ function getPlaces(location, radius, type, map) {
 *   Refresh the right menu at View
 *
 *   @param{Array of Objects} Places from Google API
- *///            +"<script> function asd(){ console.log(\"lofasz\");} </script>"
+ */
 function refreshList(places) {
     var list = document.getElementById('right-menu-ul');
     places.forEach(function (place) {
-
-
-           var entry=
-             "<li id=\"place.id\" class=\"list-group-item my-list-item\""+ place.id + ">"
+        var entry =
+            "<li class=\"list-group-item my-list-item\""+ place.id + ">"
             + "<!-- Image -->"
             + "<div class=\"col-md-8 col-lg-5\">"
-           // + "<img style='height: 20px; width: 20px' src='https://maps.googleapis.com/maps/api/place/photo?&photoreference="
-            //+ place.photos[0].photo_reference+"&key=AIzaSyB3FUDnVlbWERIbQ92-v6wAkjPmvVLOJBc'/>"
+            + "<img style='height: 20px; width: 20px' src='https://maps.googleapis.com/maps/api/place/photo?&photoreference="
+            + place.photos[0].photo_reference+"&key=AIzaSyB3FUDnVlbWERIbQ92-v6wAkjPmvVLOJBc'/>"
             + "</div>"
             + "<!-- Information -->"
             +"<div class=\"col-md-4 col-lg-7\">"
@@ -78,16 +74,26 @@ function refreshList(places) {
             +"</ul>"
             +"</div>"
             +"</li>";
-
-
-           list.innerHTML += entry;
+        list.innerHTML += entry;
+		createMarker(place)
     });
-
-    //getRoute(places[1]);
-
 }
+/*
+function createMarker(place) {
+	var placeLoc = place.geometry.location;
+	var marker = new google.maps.Marker({
+		icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',
+		map: map,
+		position: place.geometry.location
 
+	});
 
+	google.maps.event.addListener(marker, 'click', function() {
+		infowindow.setContent(place.name);
+		infowindow.open(map, this);
+	});
+}
+*/
 
 
 function writeID(getID)

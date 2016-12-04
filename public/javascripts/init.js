@@ -9,8 +9,13 @@ window.onload = function () {
 
     var btn = document.getElementById("searchPlaces");
     btn.onclick = function () {
-        findRoute(map);
+        var request = {
+            origin: ownLocation,
+            destination: parentLocation,
+            travelMode: 'TRANSIT'}
+
+       // findRoute(map,request);
+
         getPlaces(ownLocation, 2000, ['cafe','restaurant', 'shopping_mall'], map)
     }
-
 }

@@ -1,7 +1,7 @@
 /**
  * Created by dasz on 06/11/16.
  */
-var places;
+var allPlaces;
 
 /*
 * Get available places from Google API.
@@ -25,12 +25,14 @@ function getPlaces(location, radius, type, map) {
         radius: radius,
         type: type
     }
+
     service.nearbySearch(request, function(result, status){
         if (status == 'OK'){
+            allPlaces = result;
             refreshList(result);
             for (var i = 0; i < result.length; i++){
                 var place = result[i];
-                console.log(JSON.stringify(place));
+                //console.log(JSON.stringify(place));
                 /*var marker = new google.maps.Marker({
                     map: map,
                     title: place.name,
@@ -50,21 +52,23 @@ function getPlaces(location, radius, type, map) {
 *   Refresh the right menu at View
 *
 *   @param{Array of Objects} Places from Google API
- */
+ *///            +"<script> function asd(){ console.log(\"lofasz\");} </script>"
 function refreshList(places) {
     var list = document.getElementById('right-menu-ul');
     places.forEach(function (place) {
-        var entry =
-            "<li class=\"list-group-item my-list-item\""+ place.id + ">"
+
+
+           var entry=
+             "<li id=\"place.id\" class=\"list-group-item my-list-item\""+ place.id + ">"
             + "<!-- Image -->"
             + "<div class=\"col-md-8 col-lg-5\">"
-            + "<img style='height: 20px; width: 20px' src='https://maps.googleapis.com/maps/api/place/photo?&photoreference="
-            + place.photos[0].photo_reference+"&key=AIzaSyB3FUDnVlbWERIbQ92-v6wAkjPmvVLOJBc'/>"
+           // + "<img style='height: 20px; width: 20px' src='https://maps.googleapis.com/maps/api/place/photo?&photoreference="
+            //+ place.photos[0].photo_reference+"&key=AIzaSyB3FUDnVlbWERIbQ92-v6wAkjPmvVLOJBc'/>"
             + "</div>"
             + "<!-- Information -->"
-            + "<div class=\"col-md-4 col-lg-7\">"
-            + "<p class=\"text-primary\">" + place.name + "</p>"
-            + "<ul class=\"list-inline\">"
+            +"<div class=\"col-md-4 col-lg-7\">"
+            +"<p class=\"text-primary\" onclick=\"writeID('"+String(place.id)+"')\" id="+place.id+"> " + place.name + "</p>"
+            +"<ul class=\"list-inline\">"
             +"<li><p class=\"list-group-item-text\">Pricing</p></li>"
             +"<li><p>"+ place.pricing +"</p></li>"
             +"</ul>"
@@ -74,9 +78,50 @@ function refreshList(places) {
             +"</ul>"
             +"</div>"
             +"</li>";
-        list.innerHTML += entry;
+
+
+           list.innerHTML += entry;
     });
+
+    //getRoute(places[1]);
+
 }
 
 
+
+
+function writeID(getID)
+{
+    for (var i = 0; i < allPlaces.length; i++) {
+
+
+        if (allPlaces[i].id == getID) {
+            getRoute(allPlaces[i]);
+        }}
+
+
+
+}
+
+function getRoute(loc)
+{
+    console.log(loc);
+    var request = {
+        origin: ownLocation,
+        destination: loc.geometry.location,
+        travelMode: 'TRANSIT'
+    };
+
+    findRoute(map, request);
+
+    var request = {
+        origin: parentLocation,
+        destination: loc.geometry.location,
+        travelMode: 'TRANSIT'
+    };
+
+    findRoute(map, request);
+
+
+}
 

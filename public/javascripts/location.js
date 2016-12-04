@@ -82,19 +82,20 @@ function initSearching(map) {
     })
 
 }
-function findRoute(map) {
+function findRoute(map, request) {
     var directionsService = new google.maps.DirectionsService();
     var directionsDisplay = new google.maps.DirectionsRenderer();
     directionsDisplay.setMap(map);
 
-    var request = {
+    /*var request = {
         origin: ownLocation,
         destination: parentLocation,
         travelMode: 'TRANSIT'
-    }
+    }*/
     directionsService.route(request, function(result, status) {
         if (status == 'OK') {
             directionsDisplay.setDirections(result);
+            //console.log(result);
         }
     });
 }

@@ -36,11 +36,29 @@
                   <label for="pairLoc">Pair location:</label>
                   <input id="pairLoc" type="text" for="pairLoc" placeholder="Enter a location" class="form-control"><br>
                   <label for="pairLoc">Own location:</label>
-                  <input id="ownLoc" type="text" for="ownLoc" placeholder="Enter a location" class="form-control">
+                  <input id="ownLoc" type="text" for="ownLoc" placeholder="Enter a location" class="form-control"><br>
+				  
+
               </div>
           </form>
+		  
+		  <form class="form-inline">
+				<div class="form-group">
+					<label for="selType">Type of place:</label>
+					<select class="form-control" id="selType">
+						<option>bar</option>
+						<option>restaurant</option>
+						<option>park</option>
+					</select>
+				</div>&nbsp
+				<div class="form-group" >
+				  <label for="maxDist">Max distance:</label>
+				  <input id="maxDist" type="text" for="maxDist" placeholder="2" class="form-control"> km
+				</div>							
+			  </form><br>
           <button class="btn-primary btn-lg" id="searchPlaces">Search!</button>
-          <ul class="list-group" id="right-menu-ul">
+          
+		  <ul class="list-group" id="right-menu-ul">
           </ul>
       </div>
       <!-- Map -->

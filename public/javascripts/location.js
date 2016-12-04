@@ -12,6 +12,34 @@ function getOwnLocation(){
 
 }
 
+function averageCoords(loc1,loc2,map){
+	
+	var geocoder = new google.maps.Geocoder
+	
+	 var loc = {lat: (loc1.lat()+loc2.lat())/2, lng: (loc1.lng()+loc2.lng())/2};
+	 //var loc = {lat: loc1.lat(), lng: loc1.lng()	};
+	  geocoder.geocode({'location': loc}, function(results, status) {
+		if (status === 'OK') {
+		  if (results[1]) {
+			//map.setZoom(11);
+			/*var marker = new google.maps.Marker({
+			  icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',
+			  position: loc,
+			  map: map
+			});*/
+			//infowindow.setContent(results[1].formatted_address);
+			//infowindow.open(map, marker);
+		  } else {
+			window.alert('No results found');
+		  }
+		} else {
+		  window.alert('Geocoder failed due to: ' + status);
+		}
+	  });
+	
+	return loc
+}
+
 function initSearching(map) {
     var inputPairLoc = /** @type {!HTMLInputElement} */(
         document.getElementById("pairLoc"));

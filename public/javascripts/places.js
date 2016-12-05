@@ -42,6 +42,7 @@ function getPlaces(location, radius, type, map) {
         }else{
             console.log(result);
             console.log(status);
+            window.alert("Places not found");
         }
 
     });

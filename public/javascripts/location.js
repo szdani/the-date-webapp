@@ -110,9 +110,19 @@ function initSearching(map) {
     })
 
 }
-function findRoute(map, request) {
-    var directionsService = new google.maps.DirectionsService();
-    var directionsDisplay = new google.maps.DirectionsRenderer();
+function findRoute(map, request,directionsDisplay) {
+	
+    /*
+	if (directionsDisplay != null) {
+        directionsDisplay.setMap(null);
+        directionsDisplay = null;
+    }
+	*/
+	var directionsService = new google.maps.DirectionsService();
+    //var directionsDisplay = new google.maps.DirectionsRenderer();
+	
+	
+	
     directionsDisplay.setMap(map);
 
     /*var request = {

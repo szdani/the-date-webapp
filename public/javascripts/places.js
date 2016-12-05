@@ -13,22 +13,25 @@ var allPlaces;
 * @return{Array of Objects} places Result from Google API
 * CHAIN METHOD CALLING! Calls the refreshList method - TODO fix
  */
-function getPlaces(location, radius, type, map) {
+function getPlaces(location, radius, type, map,directionsDisplay) {
     // TODO
     // refreshList(places);
     var service = new google.maps.places.PlacesService(map);
     var myLatlng = new google.maps.LatLng(location.lat,location.lng);
+	var test = document.getElementById("test");
 
     var request = {
         key: "AIzaSyB3FUDnVlbWERIbQ92-v6wAkjPmvVLOJBc",
         location: location,
         radius: radius,
-        type: type
+        type: type,
+		rankby: "prominence",
     }
     service.nearbySearch(request, function(result, status){
         if (status == 'OK'){
             allPlaces = result;
-            refreshList(result);
+            refreshList(result,directionsDisplay);
+			test.value=result[0].rating
             for (var i = 0; i < result.length; i++){
                 var place = result[i];
                 //console.log(JSON.stringify(place));
@@ -52,7 +55,7 @@ function getPlaces(location, radius, type, map) {
 *
 *   @param{Array of Objects} Places from Google API
  */
-function refreshList(places) {
+function refreshList(places,directionsDisplay) {
     var list = document.getElementById('right-menu-ul');
     places.forEach(function (place) {
         var entry =
@@ -64,19 +67,19 @@ function refreshList(places) {
             + "</div>"
             + "<!-- Information -->"
             +"<div class=\"col-md-4 col-lg-7\">"
-            +"<p class=\"text-primary\" onclick=\"writeID('"+String(place.id)+"')\" id="+place.id+"> " + place.name + "</p>"
+            +"<p class=\"text-primary\" onclick=\"writeID('"+String(place.id)+"',directionsDisplay)\" id="+place.id+"> " + place.name + "</p>"
             +"<ul class=\"list-inline\">"
             +"<li><p class=\"list-group-item-text\">Pricing</p></li>"
             +"<li><p>"+ place.pricing +"</p></li>"
             +"</ul>"
             +"<ul class=\"list-inline\">"
-            +"<li><p class=\"list-group-item-text\">Type</p></li>"
-            +"<li><p>"+ place.type +"</p></li>"
+            +"<li><p class=\"list-group-item-text\">Rating</p></li>"
+            +"<li><p>"+ place.rating +"</p></li>"
             +"</ul>"
             +"</div>"
             +"</li>";
         list.innerHTML += entry;
-		createMarker(place)
+		createMarker(place,directionsDisplay)
     });
 }
 /*
@@ -97,20 +100,20 @@ function createMarker(place) {
 */
 
 
-function writeID(getID)
+function writeID(getID,directionsDisplay)
 {
     for (var i = 0; i < allPlaces.length; i++) {
 
 
         if (allPlaces[i].id == getID) {
-            getRoute(allPlaces[i]);
+            getRoute(allPlaces[i],directionsDisplay);
         }}
 
 
 
 }
 
-function getRoute(loc)
+function getRoute(loc,directionsDisplay)
 {
     console.log(loc);
     var request = {
@@ -119,7 +122,7 @@ function getRoute(loc)
         travelMode: 'TRANSIT'
     };
 
-    findRoute(map, request);
+    findRoute(map, request,directionsDisplay[0]);
 
     var request = {
         origin: parentLocation,
@@ -127,7 +130,7 @@ function getRoute(loc)
         travelMode: 'TRANSIT'
     };
 
-    findRoute(map, request);
+    findRoute(map, request,directionsDisplay[1]);
 
 
 }

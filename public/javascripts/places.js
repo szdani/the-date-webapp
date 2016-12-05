@@ -2,6 +2,7 @@
  * Created by dasz on 06/11/16.
  */
 var allPlaces;
+var directionsDisplay = []
 
 /*
 * Get available places from Google API.
@@ -13,7 +14,7 @@ var allPlaces;
 * @return{Array of Objects} places Result from Google API
 * CHAIN METHOD CALLING! Calls the refreshList method - TODO fix
  */
-function getPlaces(location, radius, type, map,directionsDisplay) {
+function getPlaces(location, radius, type, map) {
     // TODO
     // refreshList(places);
     var service = new google.maps.places.PlacesService(map);
@@ -30,7 +31,7 @@ function getPlaces(location, radius, type, map,directionsDisplay) {
     service.nearbySearch(request, function(result, status){
         if (status == 'OK'){
             allPlaces = result;
-            refreshList(result,directionsDisplay);
+            refreshList(result);
 			test.value=result[0].rating
             for (var i = 0; i < result.length; i++){
                 var place = result[i];
@@ -55,11 +56,11 @@ function getPlaces(location, radius, type, map,directionsDisplay) {
 *
 *   @param{Array of Objects} Places from Google API
  */
-function refreshList(places,directionsDisplay) {
+function refreshList(places) {
     var list = document.getElementById('right-menu-ul');
     places.forEach(function (place) {
         var entry =
-            "<li class=\"list-group-item my-list-item\""+ place.id + ">"
+            "<li class=\"list-group-item my-list-item\">"
             + "<!-- Image -->"
             + "<div class=\"col-md-8 col-lg-5\">"
             + "<img style='height: 20px; width: 20px' src='https://maps.googleapis.com/maps/api/place/photo?&photoreference="
@@ -67,7 +68,7 @@ function refreshList(places,directionsDisplay) {
             + "</div>"
             + "<!-- Information -->"
             +"<div class=\"col-md-4 col-lg-7\">"
-            +"<p class=\"text-primary\" onclick=\"writeID('"+String(place.id)+"',directionsDisplay)\" id="+place.id+"> " + place.name + "</p>"
+            +"<p class=\"text-primary\" onclick=\"writeID('"+String(place.id)+"')\" id="+place.id+"> " + place.name + "</p>"
             +"<ul class=\"list-inline\">"
             +"<li><p class=\"list-group-item-text\">Pricing</p></li>"
             +"<li><p>"+ place.pricing +"</p></li>"
@@ -79,7 +80,7 @@ function refreshList(places,directionsDisplay) {
             +"</div>"
             +"</li>";
         list.innerHTML += entry;
-		createMarker(place,directionsDisplay)
+		createMarker(place)
     });
 }
 /*
@@ -100,20 +101,20 @@ function createMarker(place) {
 */
 
 
-function writeID(getID,directionsDisplay)
+function writeID(getID)
 {
     for (var i = 0; i < allPlaces.length; i++) {
 
 
         if (allPlaces[i].id == getID) {
-            getRoute(allPlaces[i],directionsDisplay);
+            getRoute(allPlaces[i]);
         }}
 
 
 
 }
 
-function getRoute(loc,directionsDisplay)
+function getRoute(loc)
 {
     console.log(loc);
     var request = {

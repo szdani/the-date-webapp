@@ -7,7 +7,7 @@ window.onload = function () {
     initMap(mapHtml);
     initSearching(map);
 	
-	var directionsDisplay = []
+	//var directionsDisplay = []
 	directionsDisplay[0]=new google.maps.DirectionsRenderer();
 	directionsDisplay[1]=new google.maps.DirectionsRenderer();
 	
@@ -20,7 +20,7 @@ window.onload = function () {
 		type=document.getElementById("selType").value
         //findRoute(map);
         //getPlaces(targetLoc, 2000, [type], map)
-		getPlaces(targetLoc, 2000, [type], map,directionsDisplay)
+		getPlaces(targetLoc, 2000, [type], map)
 		//miért nem működik?
 		map.setZoom(15);
 		map.setCenter(targetLoc)

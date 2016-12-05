@@ -33,7 +33,7 @@ function addMarker(position) {
 
 }
 
-function createMarker(place,directionsDisplay) {
+function createMarker(place) {
 	var placeLoc = place.geometry.location;
 	var marker = new google.maps.Marker({
 		icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',
@@ -45,7 +45,7 @@ function createMarker(place,directionsDisplay) {
 	google.maps.event.addListener(marker, 'click', function() {
 		infowindow.setContent(place.name);
 		infowindow.open(map, this);
-		getRoute(place,directionsDisplay)
+		getRoute(place)
 		
 	});
 }

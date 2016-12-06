@@ -2,7 +2,10 @@
  * Created by dasz on 06/11/16.
  */
 var allPlaces;
-var directionsDisplay = []
+var directionsDisplay = [];
+var ownMarker;
+var pairMarker;
+var placeMarkers= [];
 
 /*
 * Get available places from Google API.
@@ -20,6 +23,7 @@ function getPlaces(location, radius, type, map) {
     var service = new google.maps.places.PlacesService(map);
     var myLatlng = new google.maps.LatLng(location.lat,location.lng);
 	var test = document.getElementById("test");
+	//setZoom(location, 2*radius)
 
     var request = {
         key: "AIzaSyB3FUDnVlbWERIbQ92-v6wAkjPmvVLOJBc",
@@ -58,6 +62,7 @@ function getPlaces(location, radius, type, map) {
  */
 function refreshList(places) {
     var list = document.getElementById('right-menu-ul');
+	deleteMarkers(placeMarkers);
     places.forEach(function (place) {
         var entry =
             "<li class=\"list-group-item my-list-item\">"
@@ -121,17 +126,18 @@ function getRoute(loc)
         origin: ownLocation,
         destination: loc.geometry.location,
         travelMode: 'TRANSIT'
-    };
-
-    findRoute(map, request,directionsDisplay[0]);
+    };	
+	
+    findRoute(map, request,directionsDisplay[0],'blue','blue',routeInfowindowOwn);
+	
 
     var request = {
         origin: parentLocation,
         destination: loc.geometry.location,
         travelMode: 'TRANSIT'
     };
-
-    findRoute(map, request,directionsDisplay[1]);
+	
+    findRoute(map, request,directionsDisplay[1],'green','green',routeInfowindowPair);
 
 
 }

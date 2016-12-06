@@ -8,6 +8,7 @@
 var ownLocation;
 var parentLocation;
 
+
 function getOwnLocation(){
 
 }
@@ -54,7 +55,7 @@ function initSearching(map) {
     console.log("initSearching");
     autocompletePairLoc.addListener('place_changed', function() {
         //infowindow.close();
-        //marker.setVisible(false);
+		pairMarker.setMap(null)
         var place = autocompletePairLoc.getPlace();
         if (!place.geometry) {
             // User entered the name of a Place that was not suggested and
@@ -67,7 +68,7 @@ function initSearching(map) {
         map.setCenter(place.geometry.location);
         map.setZoom(17);  // Why 17? Because it looks good.
         // Add marker
-        var marker = new google.maps.Marker({
+        pairMarker = new google.maps.Marker({
             map: map,
             anchorPoint: new google.maps.Point(0, -29),
             url: place.icon,
@@ -75,15 +76,16 @@ function initSearching(map) {
             origin: new google.maps.Point(0, 0),
             anchor: new google.maps.Point(17, 34),
             scaledSize: new google.maps.Size(35, 35)
+			,icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png'
         });
         parentLocation = place.geometry.location;
-        marker.setPosition(place.geometry.location);
-        marker.setVisible(true);
+        pairMarker.setPosition(place.geometry.location);
+        pairMarker.setVisible(true);
     })
 
     autocompleteOwnLoc.addListener('place_changed', function() {
         //infowindow.close();
-        //marker.setVisible(false);
+        ownMarker.setMap(null)
         var place = autocompleteOwnLoc.getPlace();
         if (!place.geometry) {
             // User entered the name of a Place that was not suggested and
@@ -95,7 +97,7 @@ function initSearching(map) {
         map.setCenter(place.geometry.location);
         map.setZoom(17);  // Why 17? Because it looks good.
         // Add marker
-        var marker = new google.maps.Marker({
+        ownMarker = new google.maps.Marker({
             map: map,
             anchorPoint: new google.maps.Point(0, -29),
             url: place.icon,
@@ -103,14 +105,15 @@ function initSearching(map) {
             origin: new google.maps.Point(0, 0),
             anchor: new google.maps.Point(17, 34),
             scaledSize: new google.maps.Size(35, 35)
-        });
+			,icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'
+		});
         ownLocation = place.geometry.location;
-        marker.setPosition(place.geometry.location);
-        marker.setVisible(true);
-    })
+        ownMarker.setPosition(place.geometry.location);
+        ownMarker.setVisible(true);
+	})
 
 }
-function findRoute(map, request,directionsDisplay) {
+function findRoute(map, request,directionsDisplay,strokeCol,fillCol,infowindow1) {
 	
     /*
 	if (directionsDisplay != null) {
@@ -124,6 +127,7 @@ function findRoute(map, request,directionsDisplay) {
 	
 	
     directionsDisplay.setMap(map);
+	directionsDisplay.setOptions( { suppressMarkers: true } );
 
     /*var request = {
         origin: ownLocation,
@@ -133,6 +137,28 @@ function findRoute(map, request,directionsDisplay) {
     directionsService.route(request, function(result, status) {
         if (status == 'OK') {
             directionsDisplay.setDirections(result);
+			infowindow1.close;
+			
+			var step=Math.floor(result.routes[0].legs[0].steps.length/2);
+			//step=0;
+			var p=Math.floor(result.routes[0].legs[0].steps[step].path.length/2);
+			
+			infowindow1.setContent(result.routes[0].legs[0].distance.text + "<br>" + result.routes[0].legs[0].duration.text)
+			infowindow1.setPosition(result.routes[0].legs[0].steps[step].path[p]);
+			infowindow1.open(map)
+			var iconSequence = {
+                    icon: {
+                        fillColor: fillCol, //or hexadecimal color such as: '#FF0000'
+                        fillOpacity: 0.8,
+                        scale: 3,
+                        strokeColor: strokeCol,
+                        strokeWeight: 1,
+                        strokeOpacity: 0.8,
+                        path: google.maps.SymbolPath.CIRCLE
+                    },
+                    repeat: '10px'
+                };
+                directionsDisplay.setDottedPolylineOptions(iconSequence);
             //console.log(result);
         }
     });

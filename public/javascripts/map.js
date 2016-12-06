@@ -3,6 +3,8 @@
  */
 var map;
 var infowindow
+var routeInfowindowPair
+var routeInfowindowOwn
 /*
 * Initializes the Google Map at the webpage.
 *
@@ -33,21 +35,38 @@ function addMarker(position) {
 
 }
 
+function deleteMarkers(markers) {
+		for (var i = 0; i < markers.length; i++) {
+          markers[i].setMap(null);
+        }
+        markers = [];
+}
 function createMarker(place) {
 	var placeLoc = place.geometry.location;
 	var marker = new google.maps.Marker({
-		icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',
+		icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png',
 		map: map,
 		position: place.geometry.location
 	  
 	});
-
+	placeMarkers.push(marker)
 	google.maps.event.addListener(marker, 'click', function() {
 		infowindow.setContent(place.name);
 		infowindow.open(map, this);
 		getRoute(place)
+		placeMarkers.forEach(function(item, index){
+		item.setOptions({
+                icon : "http://maps.google.com/mapfiles/ms/icons/red-dot.png"
+            });})
+		marker.setOptions({
+                icon : "http://maps.google.com/mapfiles/ms/icons/yellow-dot.png"
+            });
 		
 	});
+}
+function setZoom(center, radius) {
+	var circle = new google.maps.Circle({radius: radius, center: center}); 
+	map.fitBounds(circle.getBounds()); 
 }
 
 

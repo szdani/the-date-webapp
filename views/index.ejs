@@ -5,6 +5,9 @@
       <title><%= title %></title>
       <link rel='stylesheet' href='/stylesheets/style.css' />
       <link rel='stylesheet' href='/stylesheets/bootstrap.min.css' />
+	  
+
+	  
       <script src="/javascripts/map.js" type="application/javascript"></script>
       <script src="/javascripts/places.js" type="application/javascript"></script>
       <script src="/javascripts/location.js" type="application/javascript"></script>
@@ -33,10 +36,11 @@
           <!-- Search Bar-->
           <form>
               <div class="form-group">
+
                   <label for="pairLoc">Pair location:</label>
-                  <input id="pairLoc" type="text" for="pairLoc" placeholder="Enter a location" class="form-control"><br>
+                  <input id="pairLoc" type="text" for="pairLoc" placeholder="Enter a location" class="form-control-pair"><br>
                   <label for="pairLoc">Own location:</label>
-                  <input id="ownLoc" type="text" for="ownLoc" placeholder="Enter a location" class="form-control"><br>
+                  <input id="ownLoc" type="text" for="ownLoc" placeholder="Enter a location" class="form-control-own"><br>
 				  
 
               </div>
@@ -53,17 +57,15 @@
 				</div>&nbsp
 				<div class="form-group" >
 				  <label for="maxDist">Max distance:</label>
-				  <input id="maxDist" type="text" for="maxDist" placeholder="2" class="form-control"> km
-				  
-				  
-				  <input id="test" type="text" class="form-control">
-				  
+				  <input id="maxDist" type="number" for="maxDist" placeholder="2" class="form-control"> km
+		    
 				  
 				</div>							
 			  </form><br>
           <button class="btn-primary btn-lg" id="searchPlaces">Search!</button>
+		  <button class="btn-primary btn-lg" id="goBtn">Go!</button>
           
-		  <ul class="list-group" id="right-menu-ul">
+		  <ul class="well well-sm pre-scrollable" id="right-menu-ul">
           </ul>
       </div>
       <!-- Map -->
